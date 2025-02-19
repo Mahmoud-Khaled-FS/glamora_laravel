@@ -9,7 +9,6 @@ use Src\Shared\Middleware\AcceptJsonResponse;
 $app = Application::configure(basePath: dirname(__DIR__));
 
 $app->withRouting(
-    web: __DIR__ . '/../routes/web.php',
     commands: __DIR__ . '/../routes/console.php',
     health: '/up',
     api: glob(__DIR__ . '/../src/Features/**/routes/*.api.php'),
