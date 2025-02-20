@@ -5,20 +5,19 @@ namespace Src\Shared\Error;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AppError extends \Exception
 {
   protected int $statusCode;
-  // TODO (MAHMOUD) - Add error type Enum
   protected string $errorCode;
 
   public function __construct(
     string $message,
-    int $statusCode = 400,
-    string $errorCode = "ERR_UNKNOWN",
+    int $statusCode = Response::HTTP_BAD_REQUEST,
+    string $errorCode = ErrorCode::ERR_UNKNOWN,
     private readonly mixed $previous = null
   ) {
     parent::__construct($message);
@@ -56,27 +55,26 @@ class AppError extends \Exception
     return response()->json($this->toArray(), $this->statusCode);
   }
 
-  // TODO (MAHMOUD) - Update this function
   public static function fromLaravelException(\Throwable $exception): AppError
   {
     // ✅ Validation Error (422)
     if ($exception instanceof ValidationException) {
-      return new AppError($exception->getMessage(), 422, 'validation_error', $exception);
+      return new AppError($exception->getMessage(), Response::HTTP_UNPROCESSABLE_ENTITY, ErrorCode::ERR_VALIDATION_ERROR, $exception);
     }
 
     // ✅ Authentication Error (401)
     if ($exception instanceof AuthenticationException) {
-      return new AppError($exception->getMessage(), 401, 'unauthenticated', $exception);
+      return new AppError($exception->getMessage(), Response::HTTP_UNAUTHORIZED, ErrorCode::ERR_UNAUTHORIZED, $exception);
     }
 
     // ✅ Model Not Found (404)
     if ($exception instanceof ModelNotFoundException) {
-      return new AppError($exception->getMessage(), 404, 'not_found', $exception);
+      return new AppError($exception->getMessage(), Response::HTTP_NOT_FOUND, ErrorCode::ERR_NOT_FOUND, $exception);
     }
 
     // ✅ Generic HTTP Errors (403, 500, etc.)
     if ($exception instanceof HttpException) {
-      return new AppError($exception->getMessage(), $exception->getStatusCode(), 'http_error', $exception);
+      return new AppError($exception->getMessage(), $exception->getStatusCode(), ErrorCode::ERR_UNKNOWN, $exception);
     }
 
     // ✅ Handle AppError itself (don't wrap it again)
@@ -85,6 +83,6 @@ class AppError extends \Exception
     }
 
     // ✅ Catch Everything Else (500)
-    return new AppError('Something went wrong', 500, 'server_error', $exception);
+    return new AppError('Something went wrong', Response::HTTP_INTERNAL_SERVER_ERROR, ErrorCode::ERR_SERVER_ERROR, $exception);
   }
 }

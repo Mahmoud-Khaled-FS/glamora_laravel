@@ -10,7 +10,7 @@ class AppResponse implements Responsable
 
   public function __construct(
     public readonly mixed $data,
-    public readonly int $statusCode = 200,
+    public readonly int $statusCode = Response::HTTP_OK,
   ) {}
 
   public function toArray(): array
@@ -29,7 +29,7 @@ class AppResponse implements Responsable
 
   public static function created(mixed $data): self
   {
-    return new self($data, 201);
+    return new self($data, Response::HTTP_CREATED);
   }
 
   public static function ok(mixed $data): self

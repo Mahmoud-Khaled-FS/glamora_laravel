@@ -8,6 +8,7 @@ class UserService
 {
   public function createOne(array $data): User
   {
+    // TODO (MAHMOUD) - Create DTO class!
     return User::create($data);
   }
 }
