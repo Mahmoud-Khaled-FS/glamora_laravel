@@ -17,7 +17,7 @@ $app->withRouting(
 // TODO (MAHMOUD) - Add Global Middlewares if needed!
 $app->withMiddleware(function (Middleware $middleware) {
     $middleware->api()->append([
-        AcceptJsonResponse::class
+        AcceptJsonResponse::class,
     ]);
 });
 

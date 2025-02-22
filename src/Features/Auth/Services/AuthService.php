@@ -7,11 +7,12 @@ use Src\Features\User\Services\UserService;
 class AuthService
 {
   public function __construct(private readonly UserService $userService) {}
+
   public function login()
   {
     return [
       'token' => 'token',
-      'user' => 'user'
+      'user' => 'user',
     ];
   }
 
