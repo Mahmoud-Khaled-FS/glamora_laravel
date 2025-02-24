@@ -13,6 +13,13 @@ class AppResponse implements Responsable
     public readonly int $statusCode = Response::HTTP_OK,
   ) {}
 
+  /**
+   * @return array{
+   *  success: bool,
+   *  statusCode: int,
+   *  data: mixed
+   * }
+   */
   public function toArray(): array
   {
     return [
@@ -24,6 +31,7 @@ class AppResponse implements Responsable
 
   public function toResponse($request)
   {
+    /** @phpstan-ignore-next-line */
     return $this->toArray();
   }
 

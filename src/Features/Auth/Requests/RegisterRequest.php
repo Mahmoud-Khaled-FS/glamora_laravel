@@ -2,13 +2,10 @@
 
 namespace Src\Features\Auth\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use AppJsonRequest;
 use Src\Shared\Validation\ConstantValidation;
 
-// TODO (MAHMOUD) - Add stopOnFirstFailure = true
-// NOTE (MAHMOUD) - Need to modify the request behavior
-// TODO (MAHMOUD) - Check what is better create global Validation class or Global Request Class
-class RegisterRequest extends FormRequest
+class RegisterRequest extends AppJsonRequest
 {
     public function authorize(): bool
     {

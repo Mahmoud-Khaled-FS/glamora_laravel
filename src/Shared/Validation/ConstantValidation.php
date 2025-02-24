@@ -6,17 +6,27 @@ use Illuminate\Validation\Rules\Password;
 
 class ConstantValidation
 {
-  public static function phoneRules(bool $isRequired = true)
+  /**
+   * @return string[]
+   */
+  public static function phoneRules(bool $isRequired = true): array
   {
     return self::withRequired(['regex:/^(\+201|01|00201)[0-2,5]{1}[0-9]{8}/'], $isRequired);
   }
 
-  public static function passwordRules()
+  /**
+   * @return array<int,string|Password>
+   */
+  public static function passwordRules(): array
   {
     return ['required', Password::min(8)];
   }
 
-  private static function withRequired(array $rules, bool $isRequired)
+  /**
+   * @param mixed[] $rules
+   * @return string[]
+   */
+  private static function withRequired(array $rules, bool $isRequired): array
   {
     if ($isRequired) {
       $rules[] = 'required';

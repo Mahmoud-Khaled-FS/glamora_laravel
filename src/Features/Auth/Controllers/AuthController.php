@@ -5,7 +5,6 @@ namespace Src\Features\Auth\Controllers;
 use Illuminate\Http\Request;
 use Src\Features\Auth\Requests\RegisterRequest;
 use Src\Features\Auth\Services\AuthService;
-use Src\Shared\Error\AppError;
 use Src\Shared\Response\AppResponse;
 
 class AuthController

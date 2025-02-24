@@ -35,6 +35,14 @@ class AppError extends \Exception
     return $this->errorCode;
   }
 
+  /**
+   * @return array{
+   *  success: bool,
+   *  statusCode: int,
+   *  errorCode: string,
+   *  message: string 
+   * }
+   */
   public function toArray(): array
   {
     $err = [
