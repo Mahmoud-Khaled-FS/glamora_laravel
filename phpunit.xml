@@ -5,16 +5,20 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="Unit">
-            <directory>tests/Unit</directory>
+        <testsuite name="Shared">
+            <directory>src/Shared/**/Tests</directory>
         </testsuite>
-        <testsuite name="Feature">
-            <directory>tests/Feature</directory>
+        <testsuite name="Features">
+            <directory>src/Features/**/Tests</directory>
         </testsuite>
+        <!-- <testsuite name="Feature">
+            <directory>src/Features/**/Tests/Feature</directory>
+        </testsuite> -->
     </testsuites>
     <source>
         <include>
             <directory>app</directory>
+            <directory>src</directory>
         </include>
     </source>
     <php>
