@@ -18,3 +18,6 @@
 -   [ ] /profile [POST]
 -   [ ] /profile [DELETE]
 -   [ ] /profile/avatar [POST]
+-   [ ] /address
+-   [ ] /address [POST]
+-   [ ] /address [DELETE]
