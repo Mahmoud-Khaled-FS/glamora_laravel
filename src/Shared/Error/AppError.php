@@ -52,8 +52,13 @@ class AppError extends \Exception
       'message' => $this->getMessage(),
     ];
     if (config('app.debug')) {
-      $err['devError'] = $this->previous;
-      $err['trace'] = $this->getTrace();
+      $err['devError'] = [
+        'message' => $this->previous->getMessage(),
+        'file' => $this->previous->getFile(),
+        'line' => $this->previous->getLine(),
+        'code' => $this->previous->getCode(),
+        'trace' => $this->previous->getTrace(),
+      ];
     }
     return $err;
   }

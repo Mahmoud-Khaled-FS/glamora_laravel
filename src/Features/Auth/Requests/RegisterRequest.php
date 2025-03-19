@@ -2,7 +2,7 @@
 
 namespace Src\Features\Auth\Requests;
 
-use AppJsonRequest;
+use Src\Shared\Request\AppJsonRequest;
 use Src\Shared\Validation\ConstantValidation;
 
 class RegisterRequest extends AppJsonRequest

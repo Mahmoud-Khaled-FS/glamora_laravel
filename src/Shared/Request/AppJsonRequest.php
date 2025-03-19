@@ -1,5 +1,7 @@
 <?php
 
+namespace Src\Shared\Request;
+
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
