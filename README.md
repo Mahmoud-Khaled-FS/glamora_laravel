@@ -14,10 +14,10 @@
 
 `Users`
 
--   [ ] /profile
--   [ ] /profile [POST]
--   [ ] /profile [DELETE]
--   [ ] /profile/avatar [POST]
+-   [x] /profile
+-   [x] /profile [PATCH]
+-   [x] /profile [DELETE]
+-   [x] /profile/avatar [POST]
 -   [ ] /address
 -   [ ] /address [POST]
 -   [ ] /address [DELETE]

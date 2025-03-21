@@ -5,7 +5,7 @@ use Spatie\LaravelData\Optional;
 
 class UserDTO extends Data
 {
-  public string $name;
-  public string $phone;
-  public string|Optional $password;
+  public string $firstName;
+  public string $lastName;
+  public string|Optional $phone;
 }

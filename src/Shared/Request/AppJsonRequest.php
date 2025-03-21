@@ -13,6 +13,10 @@ class AppJsonRequest extends FormRequest
 {
   protected $stopOnFirstFailure = true;
 
+  protected $fields = null;
+  protected $isFormData = false;
+
+
   public function authorize(): bool
   {
     return true;
@@ -20,14 +24,16 @@ class AppJsonRequest extends FormRequest
 
   public function validationData(): array
   {
+    if ($this->isFormData) {
+      return parent::validationData();
+    }
     return $this->post();
   }
 
   public function failedValidation(Validator $validator)
   {
-    $exception = $validator->getException();
-
-    throw new AppError($exception->getMessage(), Response::HTTP_UNPROCESSABLE_ENTITY, ErrorCode::ERR_VALIDATION_ERROR);
+    $message = $validator->getMessageBag()->first();
+    throw new AppError($message, Response::HTTP_UNPROCESSABLE_ENTITY, ErrorCode::ERR_VALIDATION_ERROR);
   }
 
   /**
@@ -43,5 +49,22 @@ class AppJsonRequest extends FormRequest
       $data = array_merge($data, $default);
     }
     return $dto::from($data);
+  }
+
+  public function bodyMapped(): array
+  {
+    $data = $this->validated();
+    if ($this->fields) {
+      $newData = [];
+      foreach ($data as $key => $_) {
+        if (key_exists($key, $this->fields)) {
+          $newData[$this->fields[$key]] = $data[$key];
+        } else {
+          $newData[$key] = $data[$key];
+        }
+      }
+      return $newData;
+    }
+    return $data;
   }
 }

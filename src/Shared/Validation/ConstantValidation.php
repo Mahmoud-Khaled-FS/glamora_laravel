@@ -23,6 +23,15 @@ class ConstantValidation
   }
 
   /**
+   * @return string[]
+   */
+  public static function imageRules(bool $isRequired = true): array
+  {
+    // TODO (MAHMOUD) - Compress image size and add image size validation
+    return self::withRequired(['file', 'image', 'mimes:jpg,jpeg,png'], $isRequired);
+  }
+
+  /**
    * @param mixed[] $rules
    * @return string[]
    */
