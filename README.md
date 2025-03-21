@@ -18,6 +18,7 @@
 -   [x] /profile [PATCH]
 -   [x] /profile [DELETE]
 -   [x] /profile/avatar [POST]
--   [ ] /address
--   [ ] /address [POST]
--   [ ] /address [DELETE]
+-   [x] /address
+-   [x] /address [POST]
+-   [x] /address/{id} [PATCH]
+-   [x] /address/{id} [DELETE]

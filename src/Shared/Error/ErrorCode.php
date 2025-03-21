@@ -11,4 +11,5 @@ class ErrorCode
   public const ERR_HTTP_ERROR = 'ERR_HTTP_ERROR';
   public const ERR_SERVER_ERROR = 'ERR_SERVER_ERROR';
   public const ERR_MESSING_PARAMS = 'ERR_MISSING_PARAMS';
+  public const ERR_REQUIREMENT_ERROR = 'ERR_REQUIREMENT_ERROR';
 }

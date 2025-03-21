@@ -20,6 +20,7 @@ class ProfileController
 
   public function updateMe(UpdateProfileRequest $request)
   {
+    $this->userService->updateUser(Auth::user(), $request->bodyMapped());
     return AppResponse::noContent();
   }
 
@@ -37,8 +38,7 @@ class ProfileController
     }
     $file = $request->file("avatar");
     $filePath = Storage::disk("public")->putFileAs("avatar", $file, Auth::user()->id . '.' . $file->getClientOriginalExtension());
-    $user->avatar = $filePath;
-    $user->save();
+    $this->userService->updateUser($user, ["avatar" => $filePath]);
     return AppResponse::noContent();
   }
 }
