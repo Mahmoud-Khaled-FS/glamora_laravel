@@ -26,3 +26,5 @@
 `Products`
 
 -   [x] /categories
+-   [x] /products
+-   [x] /products/{id}
