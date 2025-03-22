@@ -3,13 +3,14 @@
 namespace Src\Features\Products\Controllers;
 
 use Src\Features\Products\Services\CategoryService;
+use Src\Shared\Response\AppResponse;
 
 class CategoryController
 {
   public function __construct(private readonly CategoryService $categoryService) {}
 
-  public function getCategories()
+  public function getCategories(): AppResponse
   {
-    return $this->categoryService->getAllWithChildren();
+    return AppResponse::ok($this->categoryService->getAllWithChildren());
   }
 }

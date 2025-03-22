@@ -11,6 +11,7 @@ class AppResponse implements Responsable
   public function __construct(
     public readonly mixed $data,
     public readonly int $statusCode = Response::HTTP_OK,
+    public readonly mixed $metadata = null
   ) {}
 
   /**
@@ -26,6 +27,7 @@ class AppResponse implements Responsable
       'success' => true,
       'statusCode' => $this->statusCode,
       'data' => $this->data,
+      'metadata' => $this->metadata
     ];
   }
 
@@ -35,14 +37,14 @@ class AppResponse implements Responsable
     return $this->toArray();
   }
 
-  public static function created(mixed $data): self
+  public static function created(mixed $data, mixed $metadata = null): self
   {
-    return new self($data, Response::HTTP_CREATED);
+    return new self($data, Response::HTTP_CREATED, $metadata);
   }
 
-  public static function ok(mixed $data): self
+  public static function ok(mixed $data, mixed $metadata = null): self
   {
-    return new self($data);
+    return new self($data, Response::HTTP_OK, $metadata);
   }
 
   public static function noContent(): Response

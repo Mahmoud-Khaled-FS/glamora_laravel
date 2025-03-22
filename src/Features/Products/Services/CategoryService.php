@@ -27,7 +27,7 @@ class CategoryService
       'image' => $category->image,
       'description' => $category->description,
       'parentId' => $category->parent_id,
-      'subCategories' => $category->subCategories->map(fn($s) => $this->categoryToResponse($s))
+      'subCategories' => $category->hasAttribute('subCategories') ? $category->subCategories->map(fn($s) => $this->categoryToResponse($s)) : [],
     ];
   }
 }

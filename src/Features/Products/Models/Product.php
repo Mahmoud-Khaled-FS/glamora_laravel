@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Src\Shared\Utils\ModelHelper;
 
-class ProductCategory extends Model
+class Product extends Model
 {
     protected $guarded;
 
-    public function subCategories()
+    public function category()
     {
-        return $this->hasMany(ProductCategory::class, 'parent_id');
+        return $this->belongsTo(ProductCategory::class);
     }
 
     public function image(): Attribute
@@ -20,13 +20,18 @@ class ProductCategory extends Model
         return ModelHelper::fileAccessor();
     }
 
-    public function name(): Attribute
-    {
-        return ModelHelper::defineLocaleAttribute('name');
-    }
-
     public function description(): Attribute
     {
         return ModelHelper::defineLocaleAttribute('description');
+    }
+
+    public function summary(): Attribute
+    {
+        return ModelHelper::defineLocaleAttribute('description');
+    }
+
+    public function name(): Attribute
+    {
+        return ModelHelper::defineLocaleAttribute('name');
     }
 }
