@@ -21,7 +21,7 @@ class ProductService
 
   public function getById(int $id): array
   {
-    $product = Product::with('category')->find($id);
+    $product = Product::with(['category', 'images'])->find($id);
     if (!$product) {
       throw new AppError('Product not found', 404, ErrorCode::ERR_NOT_FOUND);
     }
@@ -59,7 +59,8 @@ class ProductService
       'category' => $this->categoryService->categoryToResponse($product->category),
       'videoUrl' => $product->video_url,
       'quantity' => $product->quantity,
-      'discount' => $product->discount
+      'discount' => $product->discount,
+      'images' => $product->images
     ];
   }
 }
