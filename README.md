@@ -22,3 +22,7 @@
 -   [x] /address [POST]
 -   [x] /address/{id} [PATCH]
 -   [x] /address/{id} [DELETE]
+
+`Products`
+
+-   [x] /categories
