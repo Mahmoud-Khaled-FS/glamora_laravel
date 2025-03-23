@@ -28,3 +28,13 @@
 -   [x] /categories
 -   [x] /products
 -   [x] /products/{id}
+
+`Rating`
+
+-   [x] /ratings
+-   [x] /ratings/{id}
+-   [x] /products/{id}/ratings
+-   [x] /ratings/{id} [PATCH]
+-   [x] /ratings/{id} [POST]
+-   [x] /ratings/{id} [DELETE]
+-   [x] /ratings/my-rate 
