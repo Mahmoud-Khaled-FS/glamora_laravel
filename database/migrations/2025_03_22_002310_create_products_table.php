@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('summary_ar');
             $table->text('summary_en');
             $table->string('image');
-            $table->foreignId('category_id');
+            $table->foreignId('category_id')->nullable();
             $table->string('video_url')->nullable();
             $table->boolean('is_active')->default(true);
             $table->integer('price');

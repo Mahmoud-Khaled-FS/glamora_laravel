@@ -25,6 +25,16 @@ class AppError extends \Exception
     $this->errorCode = $errorCode;
   }
 
+  public static function NotFound(string $message): AppError
+  {
+    return new AppError($message, Response::HTTP_NOT_FOUND, ErrorCode::ERR_NOT_FOUND);
+  }
+
+  public static function unauthorized(string $message = 'Not Authorized'): AppError
+  {
+    return new AppError($message, Response::HTTP_UNAUTHORIZED, ErrorCode::ERR_UNAUTHORIZED);
+  }
+
   public function getStatusCode(): int
   {
     return $this->statusCode;
@@ -69,6 +79,7 @@ class AppError extends \Exception
   {
     return response()->json($this->toArray(), $this->statusCode);
   }
+
 
   public static function fromLaravelException(\Throwable $exception): AppError
   {
