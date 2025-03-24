@@ -35,17 +35,4 @@ class UserService
   }
 
   // TODO (MAHMOUD) - Create User DTO!
-  public function toUserResponse(User $user): array
-  {
-    dd(asset(Storage::url($user->avatar)));
-    return [
-      'id' => $user->id,
-      'firstName' => $user->first_name,
-      'lastName' => $user->last_name,
-      'email' => $user->email,
-      'phone' => $user->phone,
-      'avatar' => Storage::url($user->avatar),
-      'dateOfBirth' => $user->dateOfBirth,
-    ];
-  }
 }

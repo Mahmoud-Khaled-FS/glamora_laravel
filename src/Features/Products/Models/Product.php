@@ -31,11 +31,6 @@ class Product extends Model
         return $this->morphMany(Rating::class, 'rateable');
     }
 
-    public function image(): Attribute
-    {
-        return ModelHelper::fileAccessor();
-    }
-
     public function description(): Attribute
     {
         return ModelHelper::defineLocaleAttribute('description');

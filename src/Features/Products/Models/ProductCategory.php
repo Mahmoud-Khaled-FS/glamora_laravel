@@ -20,11 +20,6 @@ class ProductCategory extends Model
         return $this->hasMany(ProductCategory::class, 'parent_id');
     }
 
-    public function image(): Attribute
-    {
-        return ModelHelper::fileAccessor();
-    }
-
     public function name(): Attribute
     {
         return ModelHelper::defineLocaleAttribute('name');

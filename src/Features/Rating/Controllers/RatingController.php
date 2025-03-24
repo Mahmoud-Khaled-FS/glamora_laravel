@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Src\Features\Rating\Models\Rating;
 use Src\Features\Rating\Services\RatingService;
 use Src\Features\Rating\Requests\StoreRatingRequest;
 use Src\Features\Rating\Requests\UpdateRatingRequest;
+use Src\Features\Rating\Resources\RatingResource;
 use Src\Shared\Error\AppError;
 use Src\Shared\Error\ErrorCode;
 use Src\Shared\Response\AppResponse;
@@ -22,19 +24,19 @@ class RatingController
   {
     $this->validateGetQuery($request);
     $response = $this->ratingService->getRatings($request->query('retable_type'), $request->query('retable_id'));
-    return AppResponse::ok($response['ratings'], $response['metadata']);
+    return AppResponse::ok(RatingResource::collection($response['ratings']), $response['metadata']);
   }
 
   public function myRate(Request $request): AppResponse
   {
     $this->validateGetQuery($request);
     $rate = $this->ratingService->getForUser($request->query('retable_type'), $request->query('retable_id'), Auth::id());
-    return AppResponse::ok($rate);
+    return AppResponse::ok(new RatingResource($rate));
   }
 
   public function show(int $id): AppResponse
   {
-    return AppResponse::ok($this->ratingService->getById($id));
+    return AppResponse::ok(new RatingResource($this->ratingService->getById($id)));
   }
 
   public function store(StoreRatingRequest $request): AppResponse
@@ -65,7 +67,8 @@ class RatingController
 
   public function getProductRatings(int $productId): AppResponse
   {
-    return AppResponse::ok($this->ratingService->getRatings('product', $productId));
+    $response = $this->ratingService->getRatings('product', $productId);
+    return AppResponse::ok(RatingResource::collection($response['ratings']), $response['metadata']);
   }
 
   private function validateGetQuery(Request $request)

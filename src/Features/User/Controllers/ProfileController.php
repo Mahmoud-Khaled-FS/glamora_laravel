@@ -3,6 +3,7 @@
 namespace Src\Features\User\Controllers;
 
 use Auth;
+use Src\Features\User\Resources\UserResource;
 use Src\Features\User\Requests\UpdateProfileRequest;
 use Src\Features\User\Requests\UploadAvatarRequest;
 use Src\Features\User\Services\UserService;
@@ -15,7 +16,7 @@ class ProfileController
 
   public function myProfile()
   {
-    return AppResponse::ok($this->userService->toUserResponse(Auth::user()));
+    return AppResponse::ok(new UserResource(Auth::user()));
   }
 
   public function updateMe(UpdateProfileRequest $request)

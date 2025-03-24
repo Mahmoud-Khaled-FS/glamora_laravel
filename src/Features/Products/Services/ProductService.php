@@ -16,51 +16,15 @@ class ProductService
   public function getPaginate(): array
   {
     $products = Product::paginate();
-    return ["products" => $this->productToCollectionResponse($products), "metadata" => PaginationHelpers::getMetadata($products)];
+    return ["products" => $products, "metadata" => PaginationHelpers::getMetadata($products)];
   }
 
-  public function getById(int $id): array
+  public function getById(int $id): Product
   {
     $product = Product::with(['category', 'images'])->find($id);
     if (!$product) {
       throw new AppError('Product not found', 404, ErrorCode::ERR_NOT_FOUND);
     }
-
-    return $this->productToResponse($product);
-  }
-
-  public function productToCollectionResponse(LengthAwarePaginator|Collection $products): Collection
-  {
-    $productsResponse = collect();
-    foreach ($products as $product) {
-      $productsResponse->push([
-        'id' => $product->id,
-        'name' => $product->name,
-        'summary' => $product->summary,
-        'price' => $product->price,
-        'image' => $product->image,
-        'discount' => $product->discount,
-        'categoryId' => $product->category_id
-      ]);
-    }
-
-    return $productsResponse;
-  }
-
-  public function productToResponse(Product $product): array
-  {
-    return [
-      'id' => $product->id,
-      'name' => $product->name,
-      'summary' => $product->summary,
-      'price' => $product->price,
-      'image' => $product->image,
-      'discount' => $product->discount,
-      'category' => $this->categoryService->categoryToResponse($product->category),
-      'videoUrl' => $product->video_url,
-      'quantity' => $product->quantity,
-      'discount' => $product->discount,
-      'images' => $product->images
-    ];
+    return $product;
   }
 }

@@ -15,10 +15,8 @@ class ModelHelper
     );
   }
 
-  public static function fileAccessor(string $disk = 'public'): Attribute
+  public static function fileUrl(string|null $value, string $disk = 'public'): string|null
   {
-    return Attribute::make(
-      get: fn(string|null $value) => $value ? Storage::disk($disk)->url($value) : null,
-    );
+    return $value ? Storage::disk($disk)->url($value) : null;
   }
 }
