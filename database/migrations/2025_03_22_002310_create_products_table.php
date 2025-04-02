@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('quantity')->nullable();
             $table->integer('discount')->default(0);
+            $table->float('rating')->default(0);
             $table->foreignId('store_id')->nullable();
 
             $table->timestamps();

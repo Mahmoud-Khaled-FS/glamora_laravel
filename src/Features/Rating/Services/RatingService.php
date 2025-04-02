@@ -3,6 +3,7 @@
 namespace Src\Features\Rating\Services;
 
 use Src\Features\Products\Models\Product;
+use Src\Features\Rating\Jobs\ProductRatingAggregatorJob;
 use Src\Features\Rating\Models\Rating;
 use Src\Shared\Error\AppError;
 use Src\Shared\Error\ErrorCode;
@@ -31,11 +32,13 @@ class RatingService
     if ($hasRating) {
       throw new AppError("You have already rated this {$data['retableType']}", 400, ErrorCode::ERR_REQUIREMENT_ERROR);
     }
-    return $related->ratings()->create([
+    $rating = $related->ratings()->create([
       'rating' => $data['rating'],
       'review' => $data['review'],
       'user_id' => $userId
     ]);
+    $this->dispatchAvgRating($related);
+    return $rating;
   }
 
   public function updateOne(int $id, array $data): Rating
@@ -73,11 +76,26 @@ class RatingService
     return $rate;
   }
 
+  public function getAverageRating(string $relatedType, int $relatedId): float
+  {
+    $relatedType = $this->getRetableClass($relatedType);
+    return Rating::where("rateable_type", $relatedType)->where("rateable_id", $relatedId)->avg('rating');
+  }
+
   private function getRetableClass(string $relatedType): string
   {
     return match ($relatedType) {
       'product' => Product::class,
       default => null
     };
+  }
+
+  private function dispatchAvgRating(mixed $related)
+  {
+    switch (get_class($related)) {
+      case Product::class:
+        ProductRatingAggregatorJob::dispatch($related, $this);
+        break;
+    }
   }
 }

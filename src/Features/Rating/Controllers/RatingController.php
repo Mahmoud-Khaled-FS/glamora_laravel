@@ -41,7 +41,8 @@ class RatingController
 
   public function store(StoreRatingRequest $request): AppResponse
   {
-    return AppResponse::created($this->ratingService->createOne($request->bodyMapped(), Auth::id()));
+    $rating = $this->ratingService->createOne($request->bodyMapped(), Auth::id());
+    return AppResponse::created(new RatingResource($rating));
   }
 
   public function update(UpdateRatingRequest $request, int $id): Response
