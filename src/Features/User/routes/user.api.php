@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Src\Features\User\Controllers\AddressController;
 use Src\Features\User\Controllers\ProfileController;
+use Src\Features\User\Controllers\WishlistController;
 
 Route::group(["prefix" => "users/me", "middleware" => "auth:sanctum"], function () {
   Route::get("/", [ProfileController::class, "myProfile"]);
@@ -16,5 +17,11 @@ Route::group(["prefix" => "users/me", "middleware" => "auth:sanctum"], function 
     Route::post("/", [AddressController::class, "storeAddress"]);
     Route::patch("/{id}", [AddressController::class, "updateAddress"]);
     Route::delete("/{id}", [AddressController::class, "deleteAddress"]);
+  });
+
+  Route::group(['prefix' => 'wishlist'], function () {
+    Route::get('/', [WishlistController::class, 'getWishlist']);
+    Route::post('/{productId}', [WishlistController::class, 'addToWishlist']);
+    Route::delete('/{productId}', [WishlistController::class, 'removeFromWishlist']);
   });
 });
