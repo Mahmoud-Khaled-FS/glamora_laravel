@@ -1,12 +1,11 @@
 <?php
 
-namespace Src\Features\User\Resources;
+namespace Src\Features\Store\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Src\Shared\Utils\ModelHelper;
 
-class UserResource extends JsonResource
+class StoreResource extends JsonResource
 {
 
     /**

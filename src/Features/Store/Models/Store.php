@@ -12,4 +12,12 @@ class Store extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    protected $casts = [
+        'social_links' => 'array'
+    ];
+
+    protected $attributes = [
+        'status' => 'pending'
+    ];
 }

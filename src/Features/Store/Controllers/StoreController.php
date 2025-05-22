@@ -4,15 +4,18 @@ namespace Src\Features\Store\Controllers;
 
 use Src\Features\Products\Resources\ProductResource;
 use Src\Features\Store\Requests\StoreRequest;
+use Src\Features\Store\Resources\StoreResource;
 use Src\Features\Store\Services\StoreService;
 use Src\Shared\Response\AppResponse;
+use Src\Shared\Utils\PaginationHelpers;
 
 class StoreController
 {
     public function __construct(public readonly StoreService $storeService) {}
     public function index()
     {
-        return AppResponse::ok($this->storeService->getAllStores());
+        $storesResponse = $this->storeService->getAllStores();
+        return AppResponse::ok(StoreResource::collection($storesResponse), PaginationHelpers::getMetadata($storesResponse));
     }
 
     public function show(int $id)
@@ -30,7 +33,7 @@ class StoreController
     public function store(StoreRequest $request)
     {
         $store = $this->storeService->createStore($request->bodyMapped());
-        return AppResponse::created($store);
+        return AppResponse::created(StoreResource::make($store));
     }
 
     // public function search(Request $request)

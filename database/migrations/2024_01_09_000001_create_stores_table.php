@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('status')->default('pending');
-            $table->json('socialLinks')->nullable();
+            $table->json('social_links')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
