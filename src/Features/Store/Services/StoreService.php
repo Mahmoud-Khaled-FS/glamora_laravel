@@ -24,8 +24,19 @@ class StoreService
         return $store;
     }
 
-    public function getStoreProducts(int $id) {
+    public function getStoreProducts(int $id)
+    {
         $store = Store::with(['products'])->find($id);
         return $store->products;
+    }
+
+    public function createStore(array $data): Store
+    {
+        // TODO (MAHMOUD) - make it unique
+        $slug = $data['name'];
+        return Store::create([
+            ...$data,
+            'slug' => $slug,
+        ]);
     }
 }

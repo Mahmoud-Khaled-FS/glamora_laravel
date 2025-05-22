@@ -2,17 +2,14 @@
 
 namespace Src\Features\Store\Controllers;
 
-use App\Models\Store;
-use Illuminate\Http\Request;
 use Src\Features\Products\Resources\ProductResource;
+use Src\Features\Store\Requests\StoreRequest;
 use Src\Features\Store\Services\StoreService;
 use Src\Shared\Response\AppResponse;
 
 class StoreController
 {
-    public function __construct(public readonly StoreService $storeService)
-    {
-    }
+    public function __construct(public readonly StoreService $storeService) {}
     public function index()
     {
         return AppResponse::ok($this->storeService->getAllStores());
@@ -28,6 +25,12 @@ class StoreController
     {
         $products = $this->storeService->getStoreProducts($id);
         return AppResponse::ok(ProductResource::collection($products));
+    }
+
+    public function store(StoreRequest $request)
+    {
+        $store = $this->storeService->createStore($request->bodyMapped());
+        return AppResponse::created($store);
     }
 
     // public function search(Request $request)
